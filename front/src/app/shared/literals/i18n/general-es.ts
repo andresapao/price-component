@@ -1,0 +1,22 @@
+export const generalEs = {
+    action: 'Ação',
+    actions: 'Outras Ações',
+    add: 'Adicionar',
+    cancel: 'Cancelar',
+    confirm: 'Confirmar',
+    edit: 'Editar',
+    email: 'Email',
+    filters: 'Filtros',
+    modalCancelEditTitle: 'Deseja cancelar as alterações?',
+    modalCancelEditMessage: 'Tem certeza que deseja descartar as alterações?',
+    modalDeleteMessage: 'Tem certeza de que deseja excluir o(s) item(s)?',
+    modalDeleteTitle: 'Deseja excluir este cadastro?',
+    no: 'Não',
+    remove: 'Remover',
+    return: 'Voltar',
+    save: 'Salvar',
+    search: 'Buscar',
+    updatedMessage: 'Alteração efetuada com sucesso.',
+    yes: 'Sim',
+    loading : 'Carregando...'
+};

@@ -1,0 +1,356 @@
+<po-page-default
+    [p-actions]="isPageEdit ? editActions : newActions"
+    [p-breadcrumb]="isPageEdit ? editBreadcrumb : newBreadcrumb"
+    [p-title]="isPageEdit ? literals?.editPriceComponent : literals?.addNewPriceComponent">
+
+    <po-widget
+      class="po-md-12"
+      p-title="Informações Principais">
+
+      <form  #formComponentPrice="ngForm">
+
+          <div class="po-row">
+              <div class="po-md-3">
+                <po-input
+                    [(ngModel)]="priceComponent.code"
+                    p-required="true"
+                    [p-placeholder]="literals?.code"
+                    [p-label]="literals?.code"
+                    name="code"
+                    p-clean>
+                </po-input>
+              </div>
+              <div class="po-md-6">
+                <po-input
+                    [(ngModel)]="priceComponent.desc"
+                    p-required="true"
+                    [p-placeholder]="literals?.desc"
+                    p-focus="true"
+                    [p-label]="literals?.desc"
+                    name="desc"
+                    p-clean>
+                </po-input>
+              </div>
+              <div class="po-md-3">
+                <po-select
+                    [(ngModel)]="priceComponent.type"
+                    [p-placeholder]="literals?.select"
+                    p-required="true"
+                    [p-label]="literals?.type"
+                    name="type"
+                    [p-options]="[
+                      { label: 'Custo', value: 1 },
+                      { label: 'Preço', value: 2 },
+                      { label: 'Informativo', value:3 },
+                      { label: 'Margem', value: 4 },
+                      { label: 'Preço Produto', value: 5 }
+                    ]"
+                >
+                </po-select>
+              </div>
+          </div>
+
+          <div class="po-row">
+              <div class="po-md-3">
+                <po-select
+                    [(ngModel)]="priceComponent.application"
+                    [p-placeholder]="literals?.select"
+                    p-required="true"
+                    [p-label]="literals?.application"
+                    name="application"
+                    [p-options]="[
+                      { label: 'Compras', value: 1 },
+                      { label: 'Vendas', value: 2 }
+                    ]"
+                >
+                </po-select>
+              </div>
+              <div class="po-md-3">
+                <po-select
+                    [(ngModel)]="priceComponent.currency"
+                    p-required="true"
+                    [p-placeholder]="literals?.select"
+                    p-focus="true"
+                    [p-label]="literals?.currency"
+                    name="currency"
+                    [p-options]="[
+                      { label: 'R$ - Reais', value: 'R$' },
+                      { label: 'US$ - Dólar', value: 'US$' }
+                    ]"
+                >
+                </po-select>
+              </div>
+              <div class="po-md-3">
+                <po-select
+                    [(ngModel)]="priceComponent.un"
+                    p-required="true"
+                    [p-placeholder]="literals?.select"
+                    p-focus="true"
+                    [p-label]="literals?.un"
+                    name="un"
+                    [p-options]="[
+                      { label: 'KG - Quilograma', value: 'KG' },
+                      { label: 'TN - Sacas', value: 'TN' },
+                      { label: 'SA - Sacas', value: 'SA' },
+                      { label: 'BU - Bushel', value: 'BU' }
+                    ]"
+                >
+                </po-select>
+              </div>
+              <div class="po-md-3">
+                <po-input
+                    [(ngModel)]="priceComponent.table"
+                    [p-placeholder]="literals?.table"
+                    [p-label]="literals?.table"
+                    name="table"
+                    p-clean>
+                </po-input>
+              </div>
+          </div>
+
+          <div class="po-row">
+              <div class="po-md-3">
+                <po-switch
+                    [(ngModel)]="priceComponent.hedge"
+                    [p-label]="literals?.hedge"
+                    p-label-off="Não"
+                    p-label-on="Sim"
+                    name="hedge" >
+                </po-switch>
+              </div>
+              <div class="po-md-6">
+                <po-input
+                    [(ngModel)]="priceComponent.extCode"
+                    [p-placeholder]="literals?.extCode"
+                    p-focus="true"
+                    [p-label]="literals?.extCode"
+                    name="extCode"
+                    [p-disabled]="!priceComponent.hedge"
+                    p-clean>
+                </po-input>
+              </div>
+              <div class="po-md-3">
+                <po-switch
+                    [(ngModel)]="priceComponent.active"
+                    [p-label]="literals?.active"
+                    p-label-off="Não"
+                    p-label-on="Sim"
+                    name="active" >
+                </po-switch>
+              </div>
+          </div>
+      </form>
+    </po-widget>
+    <po-widget
+      class="po-md-12"
+      p-title="Relacionamentos do Componente">
+
+      <po-tabs>
+
+        <po-tab p-label="Produtos" p-active="true">
+
+            <div class="po-row po-mb-md-2 po-mt-md-2">
+              <po-button
+                  (p-click)="modalProducts.open()"
+                  p-icon="po-icon-plus"
+                  p-label="Adicionar Produto"
+                  p-type="primary" >
+              </po-button>
+            </div>
+
+            <po-table
+                [p-actions]="tabProductsActions"
+                [p-columns]="tabProductsColumns"
+                [p-items]="priceComponent.products"
+                >
+            </po-table>
+
+        </po-tab>
+        <po-tab p-label="Componentes">
+          <div class="po-row po-mb-md-2 po-mt-md-2">
+            <po-button
+                (p-click)="modalComponents.open()"
+                p-icon="po-icon-plus"
+                p-label="Adicionar Componente"
+                p-type="primary" >
+            </po-button>
+          </div>
+
+          <po-table
+              [p-actions]="tabComponentsActions"
+              [p-columns]="tabComponentsColumns"
+              [p-items]="priceComponent.components"
+              >
+          </po-table>
+        </po-tab>
+        <po-tab p-label="Frete">
+
+          <div class="po-row po-mb-md-2 po-mt-md-2">
+            <po-button
+                (p-click)="modalFreights.open()"
+                p-icon="po-icon-plus"
+                p-label="Adicionar Tipo de Frete"
+                p-type="primary" >
+            </po-button>
+          </div>
+
+          <po-table
+              [p-actions]="tabFreightsActions"
+              [p-columns]="tabFreightsColumns"
+              [p-items]="priceComponent.freights"
+              >
+          </po-table>
+
+        </po-tab>
+        <po-tab p-label="Finalidade">
+          <div class="po-row po-mb-md-2 po-mt-md-2">
+            <po-button
+                (p-click)="modalFinalitys.open()"
+                p-icon="po-icon-plus"
+                p-label="Adicionar Finalidade"
+                p-type="primary" >
+            </po-button>
+          </div>
+
+          <po-table
+              [p-actions]="tabFinalitysActions"
+              [p-columns]="tabFinalitysColumns"
+              [p-items]="priceComponent.finality"
+              >
+          </po-table>
+        </po-tab>
+
+      </po-tabs>
+
+    </po-widget>
+
+</po-page-default>
+
+<po-modal
+    #modalDelete
+    p-click-out="true"
+    p-close
+    p-size="auto"
+    [p-title]="literals?.excludeTitle"
+    [p-primary-action]="confirmDeleteAction"
+    [p-secondary-action]="exitModalAction"
+>
+    <div class="po-font-text-large po-text-left">
+        {{ literals?.excludeText | poI18n: [priceComponent.desc] }}
+    </div>
+</po-modal>
+
+<po-modal
+    #modalCancel
+    p-close
+    p-size="auto"
+    [p-title]="literals?.cancelTitle"
+    [p-primary-action]="backModalAction"
+    [p-secondary-action]="exitModalAction"
+>
+    <div class="po-font-text-large po-text-left">
+        {{ literals?.cancelText }}
+    </div>
+</po-modal>
+
+<po-modal
+    #modalProducts
+    p-title="Inserir Produto"
+    p-size="large"
+    p-hide-close="false"
+    [p-primary-action]="confirmProduct"
+    [p-secondary-action]="cancelModalAction">
+
+    <div class="po-row">
+        <div class="po-md-12">
+            <po-select
+                name="cCodeProduct"
+                [(ngModel)]="cCodeProduct"
+                [p-placeholder]="literals?.select"
+                [p-label]="literals?.code"
+                [p-options]="[
+                    { value: '001', label: 'Soja'},
+                    { value: '002', label: 'Milho' },
+                    { value: '003', label: 'Trigo' }
+                ]"
+                >
+            </po-select>
+        </div>
+    </div>
+</po-modal>
+
+<po-modal
+    #modalFreights
+    p-title="Inserir Frete"
+    p-size="large"
+    p-hide-close="false"
+    [p-primary-action]="confirmFreight"
+    [p-secondary-action]="cancelModalAction">
+
+    <div class="po-row">
+        <div class="po-md-12">
+            <po-select
+                name="cCodeFreight"
+                [(ngModel)]="cCodeFreight"
+                [p-placeholder]="literals?.select"
+                [p-label]="literals?.code"
+                [p-options]="[
+                    { value: 'CIF', label: 'CIF'},
+                    { value: 'FOB', label: 'FOB' }
+                ]"
+                >
+            </po-select>
+        </div>
+    </div>
+</po-modal>
+
+<po-modal
+    #modalFinalitys
+    p-title="Inserir Finalidade"
+    p-size="large"
+    p-hide-close="false"
+    [p-primary-action]="confirmFinality"
+    [p-secondary-action]="cancelModalAction">
+
+    <div class="po-row">
+        <div class="po-md-12">
+            <po-select
+                name="cCodeFinality"
+                [(ngModel)]="cCodeFinality"
+                [p-placeholder]="literals?.select"
+                [p-label]="literals?.code"
+                [p-options]="[
+                  { value: '001', label: 'Industrialização'  },
+                  { value: '002', label: 'Exportação Indireta' },
+                  { value: '003', label: 'Compra de Matéria Prima' }
+                ]"
+                >
+            </po-select>
+        </div>
+    </div>
+</po-modal>
+
+<po-modal
+    #modalComponents
+    p-title="Inserir Componente"
+    p-size="large"
+    p-hide-close="false"
+    [p-primary-action]="confirmComponent"
+    [p-secondary-action]="cancelModalAction">
+
+    <div class="po-row">
+        <div class="po-md-12">
+            <po-select
+                name="cCodeComponent"
+                [(ngModel)]="cCodeComponent"
+                [p-placeholder]="literals?.select"
+                [p-label]="literals?.code"
+                [p-options]="[
+                  { value: 'Elevacao', label: 'Elevação Frete'  },
+                  { value: 'Fobbings', label: 'Despesa Fobbings' }
+                ]"
+                >
+            </po-select>
+        </div>
+    </div>
+</po-modal>

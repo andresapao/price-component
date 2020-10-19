@@ -1,0 +1,70 @@
+<po-page-list
+    [p-title]="literals?.priceComponent"
+    [p-actions]="pageActions"
+    [p-breadcrumb]="breadcrumb"
+    [p-disclaimer-group]="disclaimerGroup"
+    [p-filter]="filterSettings"
+>
+    <po-table
+        p-checkbox="true"
+        p-hide-select-all="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-show-more-disabled]="!hasNext"
+        (p-show-more)="search(true)"
+        p-selectable
+        >
+        <ng-template p-table-row-template let-rowItem let-i="rowIndex" >
+
+          <po-widget p-title= "Detalhes {{rowItem.code}}">
+            <po-tabs>
+                <po-tab p-label="Produtos" p-active="true">
+
+                    <po-table
+                        [p-items]="rowItem.products"
+                        >
+                    </po-table>
+
+                </po-tab>
+                <po-tab p-label="Componentes">
+
+                  <po-table
+                      [p-items]="rowItem.components"
+                      >
+                  </po-table>
+                </po-tab>
+                <po-tab p-label="Frete">
+
+                  <po-table
+                      [p-items]="rowItem.freights"
+                      >
+                  </po-table>
+
+                </po-tab>
+                <po-tab p-label="Finalidade">
+
+                  <po-table
+                      [p-items]="rowItem.finality"
+                      >
+                  </po-table>
+                </po-tab>
+            </po-tabs>
+          </po-widget>
+        </ng-template>
+    </po-table>
+
+
+</po-page-list>
+
+<po-modal
+    #modalDelete
+    p-close
+    p-size="auto"
+    [p-title]="literals?.excludeTitle"
+    [p-primary-action]="confirmDeleteAction"
+    [p-secondary-action]="cancelDeleteAction"
+>
+    <div class="po-font-text-large po-text-left">
+        {{ !moreSelected? literals?.excludeOne:literals?.excludeMore | poI18n:[selectedLength] }}
+    </div>
+</po-modal>
