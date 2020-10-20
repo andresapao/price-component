@@ -21,19 +21,14 @@ import lombok.Setter;
 
 public class PriceItemModel {
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-		
-	@NotNull
-	@Column(name = "code")
-	private String code;
 
 	@NotNull
-	@Column(name = "description")
-	private String desc;	
+	@Column(name = "code", unique = true)
+	private String code;
 	
 	@NotNull
-	@Column(name = "un")
-	private String un;	
+	@Column(name = "description")
+	private String description;	
 }

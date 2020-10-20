@@ -21,17 +21,19 @@ import lombok.Setter;
 
 public class ComponentUnitModel {
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@NotNull
-	@Column(name = "code")
+	@Column(name = "code", unique = true)
 	private String code;
 
 	@NotNull
 	@Column(name = "description")
-	private String desc;
+	private String description;
 	
+	@NotNull
+	@Column(name = "type")
+	private String type;	
 	
 }

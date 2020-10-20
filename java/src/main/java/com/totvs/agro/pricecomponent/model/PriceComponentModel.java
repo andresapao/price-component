@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,15 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-
-
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.NonNull;
+
 
 @Getter
 @Setter
@@ -31,34 +29,35 @@ import lombok.NonNull;
 
 public class PriceComponentModel {
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotNull
-	@Column(name = "code")
+	@Column(name = "code", unique = true)
 	private String code;
 
-	@NonNull
+	@NotNull
 	@Column(name = "description")
-	private String desc;
+	private String description;
 
 	@NotNull
+	@Enumerated
 	@Column(name = "currency")
-	private String currency;
+	private CurrencyEnum currency;
 
-	@javax.validation.constraints.NotNull(message = "O campo de unidade deve ser informado")
+	@NotNull
+	@Enumerated
 	@Column(name = "measure_unit")
-	private String un;
+	private UnitOfMeasureEnum unitOfMeasure;
 
 	@Column(name = "external_code")
-	private String extCode;
+	private String externalCode;
 
 	@Column(name = "type")
 	private Integer type;
 
 	@Column(name = "price_table")
-	private String table;
+	private String priceTable;
 
 	@Column(name = "application")
 	private Integer application;
@@ -69,20 +68,21 @@ public class PriceComponentModel {
 	@Column(name = "hedge")
 	private Boolean hedge;	
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="item_id")
 	@NotNull
 	private List<PriceItemModel> products;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<ComponentPurposeModel> components;
+	private List<ComponentPurposeModel> purposes;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)	
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<ComponentUnitModel> finality;
+	private List<ComponentUnitModel> componentUnit;
 
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<FreightageComponentModel> freights;
-
+	private List<FreightageComponentModel> freightages;
+	
 }

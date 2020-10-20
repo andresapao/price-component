@@ -42,15 +42,15 @@ public class PriceComponentController {
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
 		var collect = priceRepo.findAll(page, sort).getItems();
-		
+		/*
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
 			collect.forEach(item->item.getProducts().
-					forEach(it->it.getDesc()));
+					forEach(it->it.getDescription()));
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("finality"))) {
-			collect.forEach(item->item.getFinality().
-					forEach(it->it.getDesc()));
+			collect.forEach(item->item.getPurposes().
+					forEach(it->it.getDescription()));
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("components"))) {
@@ -59,17 +59,17 @@ public class PriceComponentController {
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("freights"))) {
-			collect.forEach(item->item.getFreights().
-					forEach(it->it.getDesc()));
+			collect.forEach(item->item.getFreightages().
+					forEach(it->it.getDescription()));
 	    }		
-		
+		*/
 		return ApiCollectionResponse.from(collect);
 	}
 
 	@GetMapping("/{id}")
 	public PriceComponentModel getOne(@PathVariable(required = true) int id, ApiExpandRequest expandRequest) {
 		var collect = priceRepo.findById(id).orElse(null);
-		
+		/*
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
 			collect.getProducts().
 					forEach(it->it.getDesc());
@@ -89,7 +89,7 @@ public class PriceComponentController {
 			collect.getFreights().
 					forEach(it->it.getDesc());
 	    }			
-		
+		*/
 		return collect;
 	}
 
