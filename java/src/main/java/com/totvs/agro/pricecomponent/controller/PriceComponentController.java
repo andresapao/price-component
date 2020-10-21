@@ -49,23 +49,25 @@ public class PriceComponentController {
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
 		var collect = priceRepo.findAll(page, sort).getItems();
-		if(expandRequest.getExpand().contains("products"))
+		expandRequest.getExpand().stream().forEach((expandItem) ->
 		{
-			collect.forEach(item->item.getProducts().size());			
-		}
-		if(expandRequest.getExpand().contains("finality"))
-		{
-			collect.forEach(item->item.getFinality());
-		}
-		if(expandRequest.getExpand().contains("components"))
-		{
-			collect.forEach(item->item.getComponents());
-		}
-		if(!expandRequest.getExpand().contains("freights"))
-		{
-			collect.forEach(item->item.getFreights());
-		}
-		
+			if(expandItem.equalsIgnoreCase("products"))
+			{
+				collect.forEach(item->item.getProducts().size());			
+			}
+			if(expandItem.equalsIgnoreCase("finality"))
+			{
+				collect.forEach(item->item.getFinality().size());
+			}
+			if(expandItem.equalsIgnoreCase("components"))
+			{
+				collect.forEach(item->item.getComponents().size());
+			}
+			if(expandItem.equalsIgnoreCase("freights"))
+			{
+				collect.forEach(item->item.getFreights().size());
+			}
+		});
 		/*
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
 			collect.forEach(item->item.getProducts().
@@ -93,27 +95,27 @@ public class PriceComponentController {
 	@GetMapping("/{id}")
 	public PriceComponentModel getOne(@PathVariable(required = true) int id, ApiExpandRequest expandRequest) {
 		var collect = priceRepo.findById(id).orElse(null);
-		/*
+		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
 			collect.getProducts().
-					forEach(it->it.getDesc());
+					forEach(it->it.getDescription());
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("finality"))) {
 			collect.getFinality().
-					forEach(it->it.getDesc());
+					forEach(it->it.getId());
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("components"))) {
 			collect.getComponents().
-					forEach(it->it.getDesc());
+					forEach(it->it.getDescription());
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("freights"))) {
 			collect.getFreights().
-					forEach(it->it.getDesc());
+					forEach(it->it.getId());
 	    }			
-		*/
+		
 		return collect;
 	}
 
