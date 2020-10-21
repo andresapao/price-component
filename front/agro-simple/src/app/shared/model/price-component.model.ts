@@ -7,8 +7,8 @@ export interface IPriceComponent {
     id: number;
     code: string;
     desc: string;
-    un: string;
-    currency: string;
+    unitOfMeasure: number;
+    currency: number;
     extCode: string;
     type: number;
     table: string;
@@ -26,8 +26,8 @@ export class PriceComponent implements IPriceComponent {
     id: number;
     code: string;
     desc: string;
-    un: string;
-    currency: string;
+    unitOfMeasure: number;
+    currency: number;
     extCode: string;
     type: number;
     table: string;

@@ -41,7 +41,7 @@ public class PriceComponentModel {
 
 	@NotNull
 	@Column(name = "description")
-	private String description;
+	private String desc;
 
 	@NotNull
 	@Enumerated

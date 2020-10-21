@@ -69,6 +69,7 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
   cCodeComponent: string;
   cCodeFreight: string;
   cCodeFinality: string;
+  cOperacComponent: string;
 
   literals: any = {};
 
@@ -123,6 +124,12 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
       this.isPageEdit = true;
       this.service.getById(id, 'products,components,finality,freights').subscribe((item: IPriceComponent) => {
         this.priceComponent = item;
+        this.priceComponent.finality.map(x => {
+          x = this.aFinalitysList.find(a => a.code === x.code);
+        });
+        this.priceComponent.freights.map(x => {
+          x = this.aFreightsList.find(a => a.code === x.code);
+        });
       });
     }
   }
@@ -205,9 +212,9 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
     ];
 
     this.aProductsList = [
-      { code: '001', desc: 'Soja', un: 'BU' },
-      { code: '002', desc: 'Milho', un: 'SA' },
-      { code: '003', desc: 'Trigo', un: 'KG' }
+      { code: '001', desc: 'Soja', un: 'BUSCHEL' },
+      { code: '002', desc: 'Milho', un: 'SACA' },
+      { code: '003', desc: 'Trigo', un: 'QUILO' }
     ];
 
     /** Forder Fretes */
@@ -223,8 +230,8 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
     ];
 
     this.aFreightsList = [
-      { code: 'CIF', desc: 'Cost, Insurance and Freight' },
-      { code: 'FOB', desc: 'Free on board' }
+      { type: 1, code: 'CIF', desc: 'Cost, Insurance and Freight' },
+      { type: 2, code: 'FOB', desc: 'Free on board' }
     ];
 
     /** Forder Finalidades */
@@ -240,9 +247,9 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
     ];
 
     this.aFinalitysList = [
-      { code: '001', desc: 'Industrialização' },
-      { code: '002', desc: 'Exportação Indireta' },
-      { code: '003', desc: 'Compra de Matéria Prima' }
+      { type: 1, code: '001', desc: 'Industrialização' },
+      { type: 2, code: '002', desc: 'Compra de Matéria Prima' },
+      { type: 3, code: '003', desc: 'Exportação Indireta' }
     ];
 
     /** Forder Componentes */
@@ -250,8 +257,10 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
 
     this.tabComponentsColumns = [
       { property: 'code', label: this.literals.code, type: 'string' },
-      { property: 'desc', label: this.literals.desc, type: 'string' }
+      { property: 'desc', label: this.literals.desc, type: 'string' },
+      { property: 'operac', label: this.literals.operac, type: 'string' }
     ];
+
 
     this.tabComponentsActions = [
       { action: this.deleteComponents.bind(this), label: this.literals.remove, icon: 'po-icon-delete' }
@@ -259,10 +268,10 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
 
     this.aComponentsList = [
       {
-        code: 'Elevacao', desc: 'Elevação Frete'
+        code: 'Elevacao', desc: 'Elevação Frete', type: 'Elevação', operac: ''
       },
       {
-         code: 'Fobbings', desc: 'Despesa Fobbings'
+        code: 'Fobbings', desc: 'Despesa Fobbings', type: 'Fobings', operac: ''
       }
     ];
 
@@ -354,7 +363,10 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
         return false;
       }
 
-      this.priceComponent.components.push(this.aComponentsList.find(x => x.code === this.cCodeComponent));
+      const aCopyCompont = {...this.aComponentsList.find(x => x.code === this.cCodeComponent)};
+      aCopyCompont.operac = this.cOperacComponent;
+
+      this.priceComponent.components.push(aCopyCompont);
       this.cCodeComponent = '';
       this.modalComponents.close();
     }

@@ -13,7 +13,7 @@ import { IPriceComponent } from '../model/price-component.model';
 export class PriceComponentService {
 
   // FIXME: Ajuste o módulo
-  private apiUrl = 'http://localhost:8080/api/v1/';
+  private apiUrl = 'http://localhost:8181/api/v1/';
 
   constructor(private http: HttpClient) { }
 

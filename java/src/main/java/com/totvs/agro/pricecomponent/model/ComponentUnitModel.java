@@ -30,10 +30,14 @@ public class ComponentUnitModel {
 
 	@NotNull
 	@Column(name = "description")
-	private String description;
+	private String desc;
 	
 	@NotNull
 	@Column(name = "type")
 	private String type;	
+	
+	@NotNull
+	@Column(name = "operac")
+	private String operac;	
 	
 }
