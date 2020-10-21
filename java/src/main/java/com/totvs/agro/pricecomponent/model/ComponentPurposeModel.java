@@ -27,7 +27,7 @@ public class ComponentPurposeModel {
 
 	@NotNull
 	@Enumerated
-	@Column(name = "type", unique = true)
+	@Column(name = "type")
 	private PurposeTypeEnum type;
 	
 

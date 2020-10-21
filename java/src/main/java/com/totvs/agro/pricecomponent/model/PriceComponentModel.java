@@ -80,16 +80,16 @@ public class PriceComponentModel {
 //	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<ComponentPurposeModel> purposes;
+	private List<ComponentPurposeModel> finality;
 	
 //	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<ComponentUnitModel> componentUnit;
+	private List<ComponentUnitModel> components;
 
 //	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
-	private List<FreightageComponentModel> freightages;
+	private List<FreightageComponentModel> freights;
 	
 }

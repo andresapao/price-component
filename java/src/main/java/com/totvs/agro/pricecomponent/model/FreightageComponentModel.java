@@ -27,7 +27,7 @@ public class FreightageComponentModel {
 	
 	@NotNull
 	@Enumerated
-	@Column(name = "type", unique = true)
+	@Column(name = "type")
 	private FreightageEnum type;
 
 }

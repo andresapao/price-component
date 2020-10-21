@@ -25,7 +25,7 @@ public class PriceItemModel {
 	private Integer id;
 
 	@NotNull
-	@Column(name = "code", unique = true)
+	@Column(name = "code")
 	private String code;
 	
 	@NotNull

@@ -49,21 +49,21 @@ public class PriceComponentController {
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
 		var collect = priceRepo.findAll(page, sort).getItems();
-		if(!expandRequest.getExpand().contains("products"))
+		if(expandRequest.getExpand().contains("products"))
 		{
-			collect.forEach(item->item.setProducts(null));
+			collect.forEach(item->item.getProducts().size());			
 		}
-		if(!expandRequest.getExpand().contains("purposes"))
+		if(expandRequest.getExpand().contains("finality"))
 		{
-			collect.forEach(item->item.setPurposes(null));
+			collect.forEach(item->item.getFinality());
 		}
-		if(!expandRequest.getExpand().contains("componentUnits"))
+		if(expandRequest.getExpand().contains("components"))
 		{
-			collect.forEach(item->item.setComponentUnit(null));
+			collect.forEach(item->item.getComponents());
 		}
-		if(!expandRequest.getExpand().contains("freightages"))
+		if(!expandRequest.getExpand().contains("freights"))
 		{
-			collect.forEach(item->item.setFreightages(null));
+			collect.forEach(item->item.getFreights());
 		}
 		
 		/*
