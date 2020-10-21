@@ -261,6 +261,7 @@ export class PriceComponentEditComponent implements OnInit, OnDestroy {
       { property: 'operac', label: this.literals.operac, type: 'string' }
     ];
 
+
     this.tabComponentsActions = [
       { action: this.deleteComponents.bind(this), label: this.literals.remove, icon: 'po-icon-delete' }
     ];
