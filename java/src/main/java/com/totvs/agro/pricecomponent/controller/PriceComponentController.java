@@ -48,24 +48,25 @@ public class PriceComponentController {
 	@GetMapping
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
-		var collect = priceRepo.findAll(page, sort).getItems();
+		var collect = priceRepo.findAll(page, sort);
+		
 		expandRequest.getExpand().stream().forEach((expandItem) ->
 		{
 			if(expandItem.equalsIgnoreCase("products"))
 			{
-				collect.forEach(item->item.getProducts().size());			
+				collect.getItems().forEach(item->item.getProducts().size());			
 			}
 			if(expandItem.equalsIgnoreCase("finality"))
 			{
-				collect.forEach(item->item.getFinality().size());
+				collect.getItems().forEach(item->item.getFinality().size());
 			}
 			if(expandItem.equalsIgnoreCase("components"))
 			{
-				collect.forEach(item->item.getComponents().size());
+				collect.getItems().forEach(item->item.getComponents().size());
 			}
 			if(expandItem.equalsIgnoreCase("freights"))
 			{
-				collect.forEach(item->item.getFreights().size());
+				collect.getItems().forEach(item->item.getFreights().size());
 			}
 		});
 		/*
