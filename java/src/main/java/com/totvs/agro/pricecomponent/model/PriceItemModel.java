@@ -30,5 +30,5 @@ public class PriceItemModel {
 	
 	@NotNull
 	@Column(name = "description")
-	private String description;	
+	private String desc;	
 }

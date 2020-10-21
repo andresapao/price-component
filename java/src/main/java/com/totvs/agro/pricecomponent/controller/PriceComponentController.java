@@ -49,46 +49,23 @@ public class PriceComponentController {
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
 		var collect = priceRepo.findAll(page, sort).getItems();
-		expandRequest.getExpand().stream().forEach((expandItem) ->
+		if(expandRequest.getExpand().contains("products"))
 		{
-			if(expandItem.equalsIgnoreCase("products"))
-			{
-				collect.forEach(item->item.getProducts().size());			
-			}
-			if(expandItem.equalsIgnoreCase("finality"))
-			{
-				collect.forEach(item->item.getFinality().size());
-			}
-			if(expandItem.equalsIgnoreCase("components"))
-			{
-				collect.forEach(item->item.getComponents().size());
-			}
-			if(expandItem.equalsIgnoreCase("freights"))
-			{
-				collect.forEach(item->item.getFreights().size());
-			}
-		});
-		/*
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
-			collect.forEach(item->item.getProducts().
-					forEach(it->it.getDescription()));
-	    }
-
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("finality"))) {
-			collect.forEach(item->item.getPurposes().
-					forEach(it->it.getId()));
-	    }
+			collect.forEach(item->item.getProducts().size());			
+		}
+		if(expandRequest.getExpand().contains("finality"))
+		{
+			collect.forEach(item->item.getFinality().size());
+		}
+		if(expandRequest.getExpand().contains("components"))
+		{
+			collect.forEach(item->item.getComponents().size());
+		}
+		if(expandRequest.getExpand().contains("freights"))
+		{
+			collect.forEach(item->item.getFreights().size());
+		}		
 		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("components"))) {
-			collect.forEach(item->item.getComponentUnit().
-					forEach(it->it.getDescription()));
-	    }
-		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("freights"))) {
-			collect.forEach(item->item.getFreightages().
-					forEach(it->it.getId()));
-	    }		
-		*/
 		return ApiCollectionResponse.from(collect);
 	}
 
@@ -96,26 +73,23 @@ public class PriceComponentController {
 	public PriceComponentModel getOne(@PathVariable(required = true) int id, ApiExpandRequest expandRequest) {
 		var collect = priceRepo.findById(id).orElse(null);
 		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
-			collect.getProducts().
-					forEach(it->it.getDescription());
-	    }
-		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("finality"))) {
-			collect.getFinality().
-					forEach(it->it.getId());
-	    }
-		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("components"))) {
-			collect.getComponents().
-					forEach(it->it.getDescription());
-	    }
-		
-		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("freights"))) {
-			collect.getFreights().
-					forEach(it->it.getId());
-	    }			
-		
+		if(expandRequest.getExpand().contains("products"))
+		{
+			collect.getProducts().size();			
+		}
+		if(expandRequest.getExpand().contains("finality"))
+		{
+			collect.getFinality().size();
+		}
+		if(expandRequest.getExpand().contains("components"))
+		{
+			collect.getComponents().size();
+		}
+		if(expandRequest.getExpand().contains("freights"))
+		{
+			collect.getFreights().size();
+		}
+
 		return collect;
 	}
 
