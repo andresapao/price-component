@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -68,19 +71,23 @@ public class PriceComponentModel {
 	@Column(name = "hedge")
 	private Boolean hedge;	
 	
+//	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="item_id")
 	@NotNull
 	private List<PriceItemModel> products;
 	
+//	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
 	private List<ComponentPurposeModel> purposes;
 	
+//	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
 	private List<ComponentUnitModel> componentUnit;
 
+//	@JsonProperty(access = Access.WRITE_ONLY)	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
 	private List<FreightageComponentModel> freightages;

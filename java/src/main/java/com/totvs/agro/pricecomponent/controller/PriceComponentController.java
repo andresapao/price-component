@@ -1,6 +1,13 @@
 package com.totvs.agro.pricecomponent.controller;
 
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.management.OperationsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,25 +49,42 @@ public class PriceComponentController {
 	public ApiCollectionResponse<PriceComponentModel> getAll(ApiExpandRequest expandRequest, ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		
 		var collect = priceRepo.findAll(page, sort).getItems();
+		if(!expandRequest.getExpand().contains("products"))
+		{
+			collect.forEach(item->item.setProducts(null));
+		}
+		if(!expandRequest.getExpand().contains("purposes"))
+		{
+			collect.forEach(item->item.setPurposes(null));
+		}
+		if(!expandRequest.getExpand().contains("componentUnits"))
+		{
+			collect.forEach(item->item.setComponentUnit(null));
+		}
+		if(!expandRequest.getExpand().contains("freightages"))
+		{
+			collect.forEach(item->item.setFreightages(null));
+		}
+		
 		/*
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("products"))) {
 			collect.forEach(item->item.getProducts().
 					forEach(it->it.getDescription()));
 	    }
-		
+
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("finality"))) {
 			collect.forEach(item->item.getPurposes().
-					forEach(it->it.getDescription()));
+					forEach(it->it.getId()));
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("components"))) {
-			collect.forEach(item->item.getComponents().
-					forEach(it->it.getDesc()));
+			collect.forEach(item->item.getComponentUnit().
+					forEach(it->it.getDescription()));
 	    }
 		
 		if (expandRequest.getExpand().stream().anyMatch(expand -> expand.startsWith("freights"))) {
 			collect.forEach(item->item.getFreightages().
-					forEach(it->it.getDescription()));
+					forEach(it->it.getId()));
 	    }		
 		*/
 		return ApiCollectionResponse.from(collect);
