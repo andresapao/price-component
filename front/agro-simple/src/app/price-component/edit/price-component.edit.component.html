@@ -74,25 +74,25 @@
                     [p-label]="literals?.currency"
                     name="currency"
                     [p-options]="[
-                      { label: 'R$ - Reais', value: 'R$' },
-                      { label: 'US$ - Dólar', value: 'US$' }
+                      { label: 'R$ - Reais', value: 1 },
+                      { label: 'US$ - Dólar', value: 2 }
                     ]"
                 >
                 </po-select>
               </div>
               <div class="po-md-3">
                 <po-select
-                    [(ngModel)]="priceComponent.un"
+                    [(ngModel)]="priceComponent.unitOfMeasure"
                     p-required="true"
                     [p-placeholder]="literals?.select"
                     p-focus="true"
                     [p-label]="literals?.un"
                     name="un"
                     [p-options]="[
-                      { label: 'KG - Quilograma', value: 'KG' },
-                      { label: 'TN - Sacas', value: 'TN' },
-                      { label: 'SA - Sacas', value: 'SA' },
-                      { label: 'BU - Bushel', value: 'BU' }
+                      { label: 'KG - Quilograma', value: 1},
+                      { label: 'TN - Sacas', value: 3},
+                      { label: 'SA - Sacas', value: 4},
+                      { label: 'BU - Bushel', value: 2 }
                     ]"
                 >
                 </po-select>
@@ -327,6 +327,7 @@
                 >
             </po-select>
         </div>
+
     </div>
 </po-modal>
 
@@ -348,6 +349,19 @@
                 [p-options]="[
                   { value: 'Elevacao', label: 'Elevação Frete'  },
                   { value: 'Fobbings', label: 'Despesa Fobbings' }
+                ]"
+                >
+            </po-select>
+        </div>
+        <div class="po-md-12">
+            <po-select
+                name="cOperacComponent"
+                [(ngModel)]="cOperacComponent"
+                [p-placeholder]="literals?.select"
+                [p-label]="literals?.operac"
+                [p-options]="[
+                  { value: 'soma', label: 'Somar'  },
+                  { value: 'diminui', label: 'Diminuir' }
                 ]"
                 >
             </po-select>
