@@ -4,6 +4,7 @@ public enum UnitOfMeasureEnum {
 	QUILO,
 	BUSCHEL,
 	TONELADA,
-	SACA
+	SACA;
+
 
 }

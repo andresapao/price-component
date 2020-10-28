@@ -12,12 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.totvs.agro.pricecomponent.enumvalidators.UnitOfMeasureSubset;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,10 +50,9 @@ public class PriceComponentModel {
 	@Column(name = "currency")
 	private CurrencyEnum currency;
 
-	@NotNull
-	@Enumerated
 	@Column(name = "measure_unit")
-	private UnitOfMeasureEnum unitOfMeasure;
+	@UnitOfMeasureSubset(enumClass = UnitOfMeasureEnum.class)
+	private Integer unitOfMeasure;
 
 	@Column(name = "external_code")
 	private String externalCode;
@@ -78,8 +79,14 @@ public class PriceComponentModel {
 	private List<PriceItemModel> products;
 	
 //	@JsonProperty(access = Access.WRITE_ONLY)	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@NotNull
+	 @JoinTable(name = "component_price_finalities",
+     joinColumns = @JoinColumn(name = "price_component_id"),
+     inverseJoinColumns = @JoinColumn(name = "finality_id"),
+     uniqueConstraints = {
+	 @UniqueConstraint(name = "UK_price_component_finality",
+	    columnNames = {"finality_id", "price_component_id"})})	
 	private List<ComponentPurposeModel> finality;
 	
 //	@JsonProperty(access = Access.WRITE_ONLY)	

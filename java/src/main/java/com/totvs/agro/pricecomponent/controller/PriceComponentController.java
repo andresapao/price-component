@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.totvs.agro.pricecomponent.model.PriceComponentModel;
 import com.totvs.agro.pricecomponent.repository.PriceComponentRepository;
+import com.totvs.tjf.api.context.stereotype.ApiError;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
 import com.totvs.tjf.api.context.v2.request.ApiExpandRequest;
@@ -32,6 +33,7 @@ import com.totvs.tjf.api.validation.stereotype.ApiValidated;
 @RequestMapping(path = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @ApiGuideline(ApiGuidelineVersion.V2)
 @ApiValidated(status = HttpStatus.BAD_REQUEST)
+@ApiError
 public class PriceComponentController {
 
 
